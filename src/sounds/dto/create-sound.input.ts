@@ -5,8 +5,8 @@ export class CreateSoundInput {
   @Field()
   title: string;
 
-  @Field({ nullable: true })
-  slug?: string;
+  @Field()
+  slug: string;
 
   /* TODO: Pre-save uri on server side */
   @Field()

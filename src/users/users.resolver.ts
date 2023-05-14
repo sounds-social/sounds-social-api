@@ -1,4 +1,4 @@
-import { Resolver, Query, Args, Int, Context } from '@nestjs/graphql';
+import { Resolver, Query, Args, Int, Context, ResolveField, Parent } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { UseGuards } from '@nestjs/common';
@@ -20,5 +20,11 @@ export class UsersResolver {
   findOne(@Args('slug') slug: string, @Context() context) {
     // console.log(context.req.user);
     return this.usersService.findOne(slug);
+  }
+
+  @ResolveField()
+  async displayName(@Parent() user: User) {
+    const { username, displayName } = user;
+    return displayName ? displayName : username;
   }
 }

@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
 import { SoundsService } from './sounds.service';
 import { Sound } from './entities/sound.entity';
 import { CreateSoundInput } from './dto/create-sound.input';

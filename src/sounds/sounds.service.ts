@@ -28,7 +28,32 @@ export class SoundsService {
   ];
 
   create(createSoundInput: CreateSoundInput) {
-    return 'This action adds a new sound';
+    const id = this.sounds.length + 1
+
+    let slug = createSoundInput.slug
+
+    if (!slug) {
+      slug = kebabCase(createSoundInput.title)
+    }
+
+    const sound = {
+      id, 
+      title: createSoundInput.title, 
+      slug,
+      uri: createSoundInput.uri,
+      owner: {
+        id,
+        username: `skrillex${id}`,
+        displayName: `Skrillex ${id}`, 
+        slug: kebabCase(`Skrillex ${id}`)
+      },
+    }
+
+    this.sounds.push(sound);
+
+    console.log(this.sounds);
+
+    return sound;
   }
 
   findAll() {

@@ -10,4 +10,7 @@ export class User {
 
   @Field()
   slug: string;
+
+  @Field({ nullable: true })
+  displayName?: string;
 }

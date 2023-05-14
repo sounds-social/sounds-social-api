@@ -9,13 +9,14 @@ export class UsersService {
       id: 1,
       username: 'userOne',
       password: 'not-secure',
-      slug: 'user-one'
+      slug: 'user-one',
+      displayName: "User One"
     },
     {
       id: 2,
       username: 'userTwo',
       password: 'not-secure-two',
-      slug: 'user-two'
+      slug: 'user-two',
     },
   ];
 
@@ -26,6 +27,7 @@ export class UsersService {
       id: this.users.length + 1,
     };
 
+    // @ts-ignore
     this.users.push(user);
 
     return user;

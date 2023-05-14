@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 input CreateSoundInput {
-  slug: String
+  slug: String!
   title: String!
   uri: String!
 }
@@ -50,6 +50,7 @@ input UpdateSoundInput {
 }
 
 type User {
+  displayName: String
   id: Int!
   slug: String!
   username: String!
