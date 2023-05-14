@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateSoundInput {
+  slug: String
+  title: String!
+  uri: String!
+}
+
 type LoginResponse {
   access_token: String!
   user: User!
@@ -13,14 +19,34 @@ input LoginUserInput {
 }
 
 type Mutation {
+  createSound(createSoundInput: CreateSoundInput!): Sound!
   login(loginUserInput: LoginUserInput!): LoginResponse!
+  removeSound(id: Int!): Sound!
   signup(loginUserInput: LoginUserInput!): User!
+  updateSound(updateSoundInput: UpdateSoundInput!): Sound!
 }
 
 type Query {
   currentUser: User!
+  sound(slug: String!): Sound!
+  sounds: [Sound!]!
   user(slug: String!): User!
   users: [User!]!
+}
+
+type Sound {
+  id: Int!
+  owner: User!
+  slug: String!
+  title: String!
+  uri: String!
+}
+
+input UpdateSoundInput {
+  id: Int!
+  slug: String
+  title: String
+  uri: String
 }
 
 type User {
