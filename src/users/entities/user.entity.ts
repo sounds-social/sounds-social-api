@@ -7,4 +7,7 @@ export class User {
 
   @Field()
   username: string;
+
+  @Field()
+  slug: string;
 }

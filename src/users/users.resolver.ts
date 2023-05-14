@@ -17,8 +17,8 @@ export class UsersResolver {
 
   @Query(() => User, { name: 'user' })
   @UseGuards(JwtAuthGuard)
-  findOne(@Args('username') username: string, @Context() context) {
+  findOne(@Args('slug') slug: string, @Context() context) {
     // console.log(context.req.user);
-    return this.usersService.findOne(username);
+    return this.usersService.findOne(slug);
   }
 }
