@@ -61,6 +61,7 @@ export class SoundsService {
   }
 
   findOne(slug: string) {
+    console.log(this.sounds)
     return this.sounds.find(sound => sound.slug === slug);
   }
 
