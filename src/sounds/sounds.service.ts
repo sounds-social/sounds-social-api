@@ -51,8 +51,6 @@ export class SoundsService {
 
     this.sounds.push(sound);
 
-    console.log(this.sounds);
-
     return sound;
   }
 
@@ -61,7 +59,6 @@ export class SoundsService {
   }
 
   findOne(slug: string) {
-    console.log(this.sounds)
     return this.sounds.find(sound => sound.slug === slug);
   }
 

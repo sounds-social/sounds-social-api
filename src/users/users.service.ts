@@ -1,10 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { kebabCase } from 'lodash';
 import { CreateUserInput } from './dto/create-user.input';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from './entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
-  private users = [
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>
+  ) {}
+
+  private users = [/*
     {
       id: 1,
       username: 'userOne',
@@ -18,30 +25,32 @@ export class UsersService {
       password: 'not-secure-two',
       slug: 'user-two',
     },
-  ];
+  */];
 
-  create(createUserInput: CreateUserInput) {
-    const user = {
+  async create(createUserInput: CreateUserInput) {
+    const newUser = this.userRepository.create({
       ...createUserInput,
       slug: kebabCase(createUserInput.username),
-      id: this.users.length + 1,
-    };
+    });
 
-    // @ts-ignore
-    this.users.push(user);
+    console.log(newUser);
 
-    return user;
+    return await this.userRepository.save(newUser);
   }
 
-  findAll() {
-    return this.users;
+  async findAll() {
+    return await this.userRepository.find();
   }
 
-  findOne(slug: string) {
-    return this.users.find((user) => user.slug === slug);
+  async findOne(slug: string) {
+    return await this.userRepository.findOneBy({
+      slug
+    });
   }
 
-  findOneById(id: number) {
-    return this.users.find((user) => user.id === id);
+  async findOneById(id: number) {
+    return await this.userRepository.findOneBy({
+      id
+    });
   }
 }
