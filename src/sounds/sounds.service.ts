@@ -28,13 +28,14 @@ export class SoundsService {
       ownerId: userId,
     });
 
-    console.log(newSound);
-
     return await this.soundRepository.save(newSound);
   }
 
   async findAll() {
-    return await this.soundRepository.find();
+    return await this.soundRepository
+      .createQueryBuilder('sound')
+      .orderBy('sound.createdAt', 'DESC')
+      .getMany()
   }
 
   async findOne(slug: string) {

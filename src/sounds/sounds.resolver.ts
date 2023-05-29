@@ -13,7 +13,6 @@ export class SoundsResolver {
 
   @Query(() => [Sound], { name: 'sounds' })
   async findAll() {
-    console.log(await this.soundsService.findAll());
     return await this.soundsService.findAll();
   }
 

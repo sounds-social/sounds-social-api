@@ -11,29 +11,11 @@ export class UsersService {
     @InjectRepository(User) private userRepository: Repository<User>
   ) {}
 
-  private users = [/*
-    {
-      id: 1,
-      username: 'userOne',
-      password: 'not-secure',
-      slug: 'user-one',
-      displayName: "User One"
-    },
-    {
-      id: 2,
-      username: 'userTwo',
-      password: 'not-secure-two',
-      slug: 'user-two',
-    },
-  */];
-
   async create(createUserInput: CreateUserInput) {
     const newUser = this.userRepository.create({
       ...createUserInput,
       slug: kebabCase(createUserInput.username),
     });
-
-    console.log(newUser);
 
     return await this.userRepository.save(newUser);
   }
