@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { SoundsModule } from './sounds/sounds.module';
 import { UploadsModule } from './uploads/uploads.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
@@ -14,6 +15,12 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       driver: ApolloDriver,
       sortSchema: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+    }),
+    TypeOrmModule.forRoot({
+      type: 'sqlite',
+      database: 'database.db',
+      entities: ['dist/**/*.entity{.ts,.js}'],
+      synchronize: true,
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'static'),

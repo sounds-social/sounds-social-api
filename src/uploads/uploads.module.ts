@@ -9,6 +9,6 @@ import { UploadsService } from './uploads.service';
     SoundsModule
   ],
   controllers: [UploadsController],
-  providers: [UploadsService, SoundsService]
+  providers: [UploadsService]
 })
 export class UploadsModule {}

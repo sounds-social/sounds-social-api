@@ -2,11 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateSoundInput {
-  slug: String!
-  title: String!
-  uri: String!
-}
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type LoginResponse {
   access_token: String!
@@ -19,7 +18,6 @@ input LoginUserInput {
 }
 
 type Mutation {
-  createSound(createSoundInput: CreateSoundInput!): Sound!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   removeSound(id: Int!): Sound!
   signup(loginUserInput: LoginUserInput!): User!
@@ -35,10 +33,12 @@ type Query {
 }
 
 type Sound {
+  createdAt: DateTime!
   id: Int!
   owner: User!
   slug: String!
   title: String!
+  updatedAt: DateTime!
   uri: String!
 }
 

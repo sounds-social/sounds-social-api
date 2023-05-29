@@ -17,22 +17,22 @@ export class AuthResolver {
 
   @Mutation(() => LoginResponse)
   @UseGuards(GqlAuthGuard)
-  login(
+  async login(
     @Args('loginUserInput') loginUserInput: LoginUserInput,
     @Context() context,
   ) {
-    return this.authService.login(context.user);
+    return await this.authService.login(context.user);
   }
 
   @Mutation(() => User)
-  signup(@Args('loginUserInput') loginUserInput: LoginUserInput) {
-    return this.authService.signup(loginUserInput);
+  async signup(@Args('loginUserInput') loginUserInput: LoginUserInput) {
+    return await this.authService.signup(loginUserInput);
   }
 
   @Query(() => User)
   @UseGuards(JwtAuthGuard)
-  currentUser(@Context() context) {
-    const user = this.usersService.findOneById(
+  async currentUser(@Context() context) {
+    const user = await this.usersService.findOneById(
       context.req.user.userId
     )
 

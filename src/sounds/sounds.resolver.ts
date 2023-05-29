@@ -1,26 +1,30 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, Context } from '@nestjs/graphql';
 import { SoundsService } from './sounds.service';
 import { Sound } from './entities/sound.entity';
-import { CreateSoundInput } from './dto/create-sound.input';
 import { UpdateSoundInput } from './dto/update-sound.input';
+import { UsersService } from 'src/users/users.service';
 
 @Resolver(() => Sound)
 export class SoundsResolver {
-  constructor(private readonly soundsService: SoundsService) {}
-
-  @Mutation(() => Sound)
-  createSound(@Args('createSoundInput') createSoundInput: CreateSoundInput) {
-    return this.soundsService.create(createSoundInput);
-  }
+  constructor(
+    private readonly soundsService: SoundsService,
+    private readonly usersService: UsersService,
+    ) {}
 
   @Query(() => [Sound], { name: 'sounds' })
-  findAll() {
-    return this.soundsService.findAll();
+  async findAll() {
+    return await this.soundsService.findAll();
   }
 
   @Query(() => Sound, { name: 'sound' })
-  findOne(@Args('slug') slug: string) {
-    return this.soundsService.findOne(slug);
+  async findOne(@Args('slug') slug: string) {
+    return await this.soundsService.findOne(slug);
+  }
+
+  @ResolveField()
+  async owner(@Parent() sound: Sound) {
+    const { ownerId } = sound;
+    return this.usersService.findOneById(ownerId);
   }
 
   @Mutation(() => Sound)

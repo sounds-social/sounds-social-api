@@ -13,7 +13,7 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, password: string) {
-    const user = this.usersService.findOne(username);
+    const user = await this.usersService.findOne(username);
 
     const valid = await bcrypt.compare(password, user?.password);
 
@@ -45,7 +45,7 @@ export class AuthService {
 
     const password = await bcrypt.hash(loginUserInput.password, 10);
 
-    return this.usersService.create({
+    return await this.usersService.create({
       ...loginUserInput,
       password,
     });
