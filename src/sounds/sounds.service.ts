@@ -2,64 +2,43 @@ import { Injectable } from '@nestjs/common';
 import { kebabCase } from 'lodash';
 import { CreateSoundInput } from './dto/create-sound.input';
 import { UpdateSoundInput } from './dto/update-sound.input';
-
-const generateMockSound = (id: number) => ({
-  id, 
-  title: `Track Number ${id}`, 
-  slug: kebabCase(`Track Number ${id}`),
-  uri: 'https://wavesurfer-js.org/example/media/demo.wav',
-  owner: {
-    id,
-    username: `skrillex${id}`,
-    displayName: `Skrillex ${id}`, 
-    slug: kebabCase(`Skrillex ${id}`)
-  },
-})
+import { InjectRepository } from '@nestjs/typeorm';
+import { Sound } from './entities/sound.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SoundsService {
-  private sounds = [
-    generateMockSound(1),
-    generateMockSound(2),
-    generateMockSound(3),
-    generateMockSound(4),
-    generateMockSound(5),
-    generateMockSound(6)
-  ];
+  constructor(
+    @InjectRepository(Sound) private soundRepository: Repository<Sound>
+  ) {}
 
-  create(createSoundInput: CreateSoundInput) {
-    const id = this.sounds.length + 1
+  private sounds = [];
 
+  async create(createSoundInput: CreateSoundInput, userId: number) {
     let slug = createSoundInput.slug
 
     if (!slug) {
       slug = kebabCase(createSoundInput.title)
     }
 
-    const sound = {
-      id, 
+    const newSound = this.soundRepository.create({
       title: createSoundInput.title, 
       slug,
       uri: createSoundInput.uri,
-      owner: {
-        id,
-        username: `skrillex${id}`,
-        displayName: `Skrillex ${id}`, 
-        slug: kebabCase(`Skrillex ${id}`)
-      },
-    }
+      ownerId: userId,
+    });
 
-    this.sounds.push(sound);
+    console.log(newSound);
 
-    return sound;
+    return await this.soundRepository.save(newSound);
   }
 
-  findAll() {
-    return this.sounds;
+  async findAll() {
+    return await this.soundRepository.find();
   }
 
-  findOne(slug: string) {
-    return this.sounds.find(sound => sound.slug === slug);
+  async findOne(slug: string) {
+    return await this.sounds.find(sound => sound.slug === slug);
   }
 
   update(id: number, updateSoundInput: UpdateSoundInput) {

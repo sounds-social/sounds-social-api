@@ -2,12 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateSoundInput {
-  slug: String!
-  title: String!
-  uri: String!
-}
-
 type LoginResponse {
   access_token: String!
   user: User!
@@ -19,7 +13,6 @@ input LoginUserInput {
 }
 
 type Mutation {
-  createSound(createSoundInput: CreateSoundInput!): Sound!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   removeSound(id: Int!): Sound!
   signup(loginUserInput: LoginUserInput!): User!
