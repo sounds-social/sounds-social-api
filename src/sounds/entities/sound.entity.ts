@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { LikeEntity } from 'src/likes/entities/like-entity.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -34,4 +35,8 @@ export class Sound {
 
   @Field(type => User)
   owner: User;
+
+  @Field(type => [User])
+  @OneToMany(() => LikeEntity, like => like.user)
+  likes: LikeEntity[];
 }

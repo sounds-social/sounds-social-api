@@ -8,6 +8,7 @@ import { SoundsModule } from './sounds/sounds.module';
 import { UploadsModule } from './uploads/uploads.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { LikesModule } from './likes/likes.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     AuthModule,
     SoundsModule,
     UploadsModule,
+    LikesModule,
   ],
 })
 export class AppModule {}
