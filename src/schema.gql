@@ -53,5 +53,6 @@ type User {
   displayName: String
   id: Int!
   slug: String!
+  sounds: [Sound!]!
   username: String!
 }

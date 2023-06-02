@@ -12,8 +12,6 @@ export class SoundsService {
     @InjectRepository(Sound) private soundRepository: Repository<Sound>
   ) {}
 
-  private sounds = [];
-
   async create(createSoundInput: CreateSoundInput, userId: number) {
     let slug = createSoundInput.slug
 
@@ -39,7 +37,9 @@ export class SoundsService {
   }
 
   async findOne(slug: string) {
-    return await this.sounds.find(sound => sound.slug === slug);
+    return this.soundRepository.findOneBy({
+      slug
+    });
   }
 
   update(id: number, updateSoundInput: UpdateSoundInput) {

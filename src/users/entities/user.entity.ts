@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Sound } from 'src/sounds/entities/sound.entity';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -22,4 +23,7 @@ export class User {
   @Field({ nullable: true })
   @Column({ nullable: true })
   displayName?: string;
+
+  @Field(type => [Sound])
+  sounds: Sound[];
 }
