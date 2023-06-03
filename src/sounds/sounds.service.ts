@@ -74,6 +74,20 @@ export class SoundsService {
     }
   }
 
+  async editCoverImage(id: number, coverUri: string, userId: number) {
+    const sound = await this.soundRepository.findOneBy({
+      id
+    })
+
+    if (sound.ownerId !== userId) {
+      throw new Error('Owner doesnt match logged in user');
+    }
+
+    sound.coverUri = coverUri
+
+    return await this.soundRepository.save(sound);
+  }
+
   update(id: number, updateSoundInput: UpdateSoundInput) {
     return `This action updates a #${id} sound`;
   }

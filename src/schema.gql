@@ -47,6 +47,7 @@ type Query {
 }
 
 type Sound {
+  coverUri: String
   createdAt: DateTime!
   id: Int!
   likes: [LikeEntity!]!

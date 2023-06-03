@@ -38,4 +38,30 @@ export class UploadsController {
         message: "Successfully uploaded Sound"
       };
   }
+
+  @Post('cover-image')
+  @UseInterceptors(FileInterceptor('file'))
+  @UseGuards(JwtAuthGuard)
+  async uploadCoverImage(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() body,
+    @Req() request 
+    ) {
+      const uniqueFilename = `${Date.now()}${file.originalname}`
+
+      this.uploadsService.uploadFile(
+        uniqueFilename,
+        file.buffer
+      )
+
+      const createdSound = await this.soundsService.editCoverImage(
+        body.soundId, 
+        `http://localhost:3000/${uniqueFilename}`, 
+        request.user.userId)
+
+      return {
+        sound: createdSound,
+        message: "Successfully uploaded Sound"
+      };
+  }
 }

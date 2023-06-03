@@ -22,6 +22,10 @@ export class Sound {
   @Column()
   uri: string;
 
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  coverUri?: string;
+
   @Field(type => Date)
   @CreateDateColumn()
   createdAt: Date;
