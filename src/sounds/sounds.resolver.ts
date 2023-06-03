@@ -38,6 +38,11 @@ export class SoundsResolver {
   }
 
   @Mutation(() => Sound)
+  addPlayCount(@Args('slug') slug: string) {
+    return this.soundsService.addPlayCount(slug);
+  }
+
+  /*@Mutation(() => Sound)
   updateSound(@Args('updateSoundInput') updateSoundInput: UpdateSoundInput) {
     return this.soundsService.update(updateSoundInput.id, updateSoundInput);
   }
@@ -45,5 +50,5 @@ export class SoundsResolver {
   @Mutation(() => Sound)
   removeSound(@Args('id', { type: () => Int }) id: number) {
     return this.soundsService.remove(id);
-  }
+  }*/
 }

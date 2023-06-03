@@ -30,6 +30,10 @@ export class Sound {
   @UpdateDateColumn()
   updatedAt: Date;
   
+  @Field(type => Int, { defaultValue: 0 })
+  @Column({ nullable: true })
+  playCount?: number;
+
   @Column()
   ownerId: number;
 

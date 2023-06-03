@@ -31,12 +31,11 @@ input LoginUserInput {
 }
 
 type Mutation {
+  addPlayCount(slug: String!): Sound!
   like(createLikeInput: CreateLikeInput!): LikeEntity!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   removeLike(soundId: Int!): LikeEntity!
-  removeSound(id: Int!): Sound!
   signup(loginUserInput: LoginUserInput!): User!
-  updateSound(updateSoundInput: UpdateSoundInput!): Sound!
 }
 
 type Query {
@@ -52,17 +51,11 @@ type Sound {
   id: Int!
   likes: [LikeEntity!]!
   owner: User!
+  playCount: Int!
   slug: String!
   title: String!
   updatedAt: DateTime!
   uri: String!
-}
-
-input UpdateSoundInput {
-  id: Int!
-  slug: String
-  title: String
-  uri: String
 }
 
 type User {

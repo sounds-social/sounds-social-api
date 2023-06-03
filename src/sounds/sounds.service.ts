@@ -58,6 +58,22 @@ export class SoundsService {
     });
   }
 
+  async addPlayCount(slug: string) {
+    const sound = await this.soundRepository.findOneBy({
+      slug
+    })
+
+    if (sound) {
+      if (!sound.playCount) {
+        sound.playCount = 0
+      }
+
+      sound.playCount = sound.playCount + 1
+
+      return await this.soundRepository.save(sound);
+    }
+  }
+
   update(id: number, updateSoundInput: UpdateSoundInput) {
     return `This action updates a #${id} sound`;
   }
