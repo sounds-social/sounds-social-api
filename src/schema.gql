@@ -62,7 +62,7 @@ type Sound {
 type User {
   displayName: String
   id: Int!
-  likes: [LikeEntity!]!
+  likes: [LikeEntity!]
   slug: String!
   sounds: [Sound!]!
   username: String!

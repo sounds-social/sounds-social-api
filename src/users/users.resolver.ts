@@ -33,4 +33,11 @@ export class UsersResolver {
 
     return await this.usersService.findSoundsForUser(id);
   }
+
+  @ResolveField()
+  async likes(@Parent() user: User) {
+    const { id } = user;
+
+    return await this.usersService.findLikesForUser(id);
+  }
 }
