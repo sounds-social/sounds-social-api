@@ -69,10 +69,27 @@ export class LikesService {
       }
     });
 
-
-    console.log(like)
-    await this.likeRepository.softRemove(like);
+    if (like) {
+      await this.likeRepository.softRemove(like);
+    }
 
     return like;
+  }
+
+  async userLikes(likeId: number, userId: number) {
+    const like = await this.likeRepository.findOne({
+      relations: {
+        sound: true,
+        user: true,
+      },
+      where: { 
+        likeId,
+        user: {
+          id: userId
+        },
+      }
+    });
+
+    return !!like;
   }
 }

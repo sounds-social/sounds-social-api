@@ -3,6 +3,8 @@ import { SoundsService } from './sounds.service';
 import { Sound } from './entities/sound.entity';
 import { UpdateSoundInput } from './dto/update-sound.input';
 import { UsersService } from 'src/users/users.service';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Resolver(() => Sound)
 export class SoundsResolver {
@@ -17,6 +19,7 @@ export class SoundsResolver {
   }
 
   @Query(() => Sound, { name: 'sound' })
+  @UseGuards(JwtAuthGuard)
   async findOne(@Args('slug') slug: string) {
     return await this.soundsService.findOne(slug);
   }
@@ -25,6 +28,13 @@ export class SoundsResolver {
   async owner(@Parent() sound: Sound) {
     const { ownerId } = sound;
     return this.usersService.findOneById(ownerId);
+  }
+
+  @ResolveField()
+  async likes(@Parent() sound: Sound) {
+    const { id } = sound;
+
+    return await this.soundsService.findLikesForUser(id);
   }
 
   @Mutation(() => Sound)

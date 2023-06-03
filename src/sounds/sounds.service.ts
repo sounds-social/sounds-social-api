@@ -5,11 +5,13 @@ import { UpdateSoundInput } from './dto/update-sound.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Sound } from './entities/sound.entity';
 import { Repository } from 'typeorm';
+import { LikeEntity } from 'src/likes/entities/like-entity.entity';
 
 @Injectable()
 export class SoundsService {
   constructor(
-    @InjectRepository(Sound) private soundRepository: Repository<Sound>
+    @InjectRepository(Sound) private soundRepository: Repository<Sound>,
+    @InjectRepository(LikeEntity) private likeRepository: Repository<LikeEntity>
   ) {}
 
   async create(createSoundInput: CreateSoundInput, userId: number) {
@@ -34,6 +36,20 @@ export class SoundsService {
       .createQueryBuilder('sound')
       .orderBy('sound.createdAt', 'DESC')
       .getMany()
+  }
+
+  async findLikesForUser(soundId: number) {
+    return await this.likeRepository.find({
+      relations: {
+        sound: true,
+        user: true,
+      },
+      where: { 
+        sound: {
+          id: soundId
+        },
+      }
+    });
   }
 
   async findOne(slug: string) {

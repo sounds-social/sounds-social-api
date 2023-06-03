@@ -28,7 +28,7 @@ export class User {
   @Field(type => [Sound])
   sounds: Sound[];
 
-  @Field(type => [Sound])
+  @Field(type => [LikeEntity])
   @OneToMany(() => LikeEntity, like => like.user)
   likes: LikeEntity[];
 }

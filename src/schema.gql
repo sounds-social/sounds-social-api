@@ -13,10 +13,11 @@ scalar DateTime
 
 type LikeEntity {
   createdAt: DateTime!
+  currentUserHasLiked: Boolean!
   deletedAt: DateTime!
   likeId: Int!
-  sound: Sound!
-  user: User!
+  sound: Sound
+  user: User
 }
 
 type LoginResponse {
@@ -49,7 +50,7 @@ type Query {
 type Sound {
   createdAt: DateTime!
   id: Int!
-  likes: [User!]!
+  likes: [LikeEntity!]!
   owner: User!
   slug: String!
   title: String!
@@ -67,7 +68,7 @@ input UpdateSoundInput {
 type User {
   displayName: String
   id: Int!
-  likes: [Sound!]!
+  likes: [LikeEntity!]!
   slug: String!
   sounds: [Sound!]!
   username: String!

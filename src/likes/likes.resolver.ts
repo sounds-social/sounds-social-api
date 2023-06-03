@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Context, ResolveField, Parent } from '@nestjs/graphql';
 import { LikesService } from './likes.service';
 import { LikeEntity } from './entities/like-entity.entity';
 import { CreateLikeInput } from './dto/create-like.input';
@@ -31,6 +31,19 @@ export class LikesResolver {
     return await this.likesService.remove(
       soundId,
       context.req.user.userId
+    );
+  }
+
+  @ResolveField()
+  @UseGuards(JwtAuthGuard)
+  async currentUserHasLiked(
+      @Parent() like: LikeEntity, 
+      @Context() context) {
+    const userId = context?.req?.user?.userId
+
+    return await this.likesService.userLikes(
+      like.likeId,
+      userId,
     );
   }
 

@@ -18,11 +18,14 @@ export class LikeEntity {
     @DeleteDateColumn()
     deletedAt: Date;
 
-    @Field(type => Sound)
-    @ManyToOne(() => Sound, (sound) => sound.likes)
-    sound: Sound
+    @Field(type => Boolean)
+    currentUserHasLiked: boolean;
 
-    @Field(type => User)
+    @Field(type => Sound, { nullable: true })
+    @ManyToOne(() => Sound, (sound) => sound.likes)
+    sound?: Sound
+
+    @Field(type => User, { nullable: true })
     @ManyToOne(() => User, (user) => user.likes)
-    user: User
+    user?: User
 }
