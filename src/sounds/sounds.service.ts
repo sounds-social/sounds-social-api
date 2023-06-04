@@ -53,7 +53,7 @@ export class SoundsService {
   }
 
   async findOne(slug: string) {
-    return this.soundRepository.findOneBy({
+    return await this.soundRepository.findOneBy({
       slug
     });
   }
@@ -92,7 +92,19 @@ export class SoundsService {
     return `This action updates a #${id} sound`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} sound`;
+  async remove(id: number) {
+    const sound = await this.soundRepository.findOneBy({
+      id
+    });
+
+    const likes = await this.findLikesForUser(id);
+
+    for (const like of likes) {
+      await this.likeRepository.softRemove(like);
+    }
+
+    await this.soundRepository.softRemove(sound);
+
+    return sound;
   }
 }

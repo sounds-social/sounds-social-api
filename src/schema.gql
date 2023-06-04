@@ -35,6 +35,7 @@ type Mutation {
   like(createLikeInput: CreateLikeInput!): LikeEntity!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   removeLike(soundId: Int!): LikeEntity!
+  removeSound(id: Int!): Sound!
   signup(loginUserInput: LoginUserInput!): User!
 }
 
@@ -49,6 +50,7 @@ type Query {
 type Sound {
   coverUri: String
   createdAt: DateTime!
+  deletedAt: DateTime!
   id: Int!
   likes: [LikeEntity!]!
   owner: User!

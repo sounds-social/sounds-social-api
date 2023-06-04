@@ -42,13 +42,13 @@ export class SoundsResolver {
     return this.soundsService.addPlayCount(slug);
   }
 
+  @Mutation(() => Sound)
+  async removeSound(@Args('id', { type: () => Int }) id: number) {
+    return await this.soundsService.remove(id);
+  }
+
   /*@Mutation(() => Sound)
   updateSound(@Args('updateSoundInput') updateSoundInput: UpdateSoundInput) {
     return this.soundsService.update(updateSoundInput.id, updateSoundInput);
-  }
-
-  @Mutation(() => Sound)
-  removeSound(@Args('id', { type: () => Int }) id: number) {
-    return this.soundsService.remove(id);
   }*/
 }
